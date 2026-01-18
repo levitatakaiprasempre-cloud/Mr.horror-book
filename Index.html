@@ -1,175 +1,230 @@
-# Mr.horror-book
+#Mr.horror book
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitor de Livros - Preto e Vermelho</title>
+    <title>Leitor de Livros - Preto & Vermelho</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Georgia', serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
             background-color: #000;
             color: #fff;
-            padding: 20px;
             min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 20%);
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background-color: #111;
-            border: 2px solid #c00;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(200, 0, 0, 0.5);
         }
         
         header {
             text-align: center;
-            padding: 20px 0;
-            border-bottom: 2px solid #c00;
-            margin-bottom: 20px;
+            padding: 30px 0;
+            border-bottom: 2px solid #ff0000;
+            margin-bottom: 30px;
         }
         
         h1 {
-            color: #c00;
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(200, 0, 0, 0.7);
+            font-size: 2.8rem;
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
             letter-spacing: 2px;
         }
         
         .subtitle {
-            color: #f00;
             font-size: 1.2rem;
+            color: #ccc;
             margin-top: 10px;
         }
         
         .upload-section {
-            background-color: #222;
-            border: 1px solid #444;
-            border-radius: 6px;
-            padding: 20px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 30px;
             margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
         }
         
-        .upload-section h2 {
-            color: #c00;
-            margin-bottom: 15px;
+        .upload-area {
+            border: 3px dashed #ff0000;
+            border-radius: 10px;
+            padding: 40px 20px;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
         
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
+        .upload-area:hover {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: #ff3333;
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: #ff0000;
             margin-bottom: 15px;
         }
         
-        .file-input-wrapper input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
+        .upload-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
         }
         
-        .file-input-button {
-            display: block;
-            padding: 12px 20px;
-            background-color: #c00;
+        .file-input {
+            display: none;
+        }
+        
+        .btn {
+            background: #ff0000;
             color: white;
             border: none;
-            border-radius: 4px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 5px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: inline-block;
             text-align: center;
-            font-size: 1rem;
-            transition: all 0.3s;
-            width: 100%;
         }
         
-        .file-input-button:hover {
-            background-color: #800;
+        .btn:hover {
+            background: #cc0000;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(200, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
         
-        .file-name {
-            margin-top: 10px;
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .book-info {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .book-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .book-title {
+            font-size: 1.8rem;
+            color: #ff0000;
+        }
+        
+        .book-meta {
             color: #aaa;
             font-size: 0.9rem;
         }
         
-        .content-section {
-            display: none;
-            margin-top: 30px;
+        .reader-container {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
-        .content-header {
+        .reader-content {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        .reader-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .file-list {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .file-list h2 {
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+        
+        .file-item {
+            padding: 15px;
+            border-bottom: 1px solid #333;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #444;
-            margin-bottom: 20px;
         }
         
-        .book-title {
-            color: #c00;
-            font-size: 1.8rem;
+        .file-item:last-child {
+            border-bottom: none;
         }
         
-        .controls {
+        .file-name {
+            color: #fff;
+        }
+        
+        .file-size {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .file-actions {
             display: flex;
             gap: 10px;
         }
         
-        .btn {
-            padding: 8px 15px;
-            background-color: #333;
+        .file-actions button {
+            background: #333;
             color: #fff;
-            border: 1px solid #c00;
-            border-radius: 4px;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            font-size: 0.9rem;
         }
         
-        .btn:hover {
-            background-color: #c00;
-        }
-        
-        .book-content {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            text-align: justify;
-            padding: 10px 0;
-        }
-        
-        .book-content p {
-            margin-bottom: 20px;
-            text-indent: 30px;
+        .file-actions button:hover {
+            background: #ff0000;
         }
         
         .instructions {
-            background-color: #222;
-            border: 1px solid #444;
-            border-radius: 6px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 10px;
             padding: 20px;
             margin-top: 30px;
         }
         
         .instructions h2 {
-            color: #c00;
+            color: #ff0000;
             margin-bottom: 15px;
-            text-align: center;
         }
         
         .instructions ul {
@@ -178,38 +233,34 @@
         
         .instructions li {
             margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        
-        .highlight {
-            color: #f00;
-            font-weight: bold;
+            line-height: 1.5;
         }
         
         footer {
             text-align: center;
+            padding: 20px;
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #444;
+            border-top: 1px solid #333;
             color: #777;
             font-size: 0.9rem;
         }
         
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
+        @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
             }
             
-            .book-title {
-                font-size: 1.4rem;
+            .upload-area {
+                padding: 20px 10px;
             }
             
-            .book-content {
+            .upload-text {
                 font-size: 1rem;
+            }
+            
+            .reader-container {
+                min-height: 300px;
+                padding: 15px;
             }
         }
     </style>
@@ -218,134 +269,199 @@
     <div class="container">
         <header>
             <h1>LEITOR DE LIVROS</h1>
-            <div class="subtitle">Formato Preto e Vermelho</div>
+            <p class="subtitle">Envie seu livro e leia em qualquer formato</p>
         </header>
         
         <section class="upload-section">
-            <h2>Carregar seu Livro</h2>
-            <div class="file-input-wrapper">
-                <input type="file" id="fileInput" accept=".txt">
-                <label for="fileInput" class="file-input-button">Selecione seu arquivo de texto (.txt)</label>
+            <div class="upload-area" id="dropZone">
+                <i>📁</i>
+                <p class="upload-text">Arraste e solte seu livro aqui</p>
+                <p>ou</p>
+                <button class="btn" id="browseBtn">ESCOLHER ARQUIVO</button>
+                <input type="file" id="fileInput" class="file-input" accept="*/*">
             </div>
-            <div class="file-name" id="fileName">Nenhum arquivo selecionado</div>
+            <p style="text-align: center; color: #777; margin-top: 10px;">Formatos aceitos: PDF, EPUB, MOBI, TXT, DOC, DOCX, etc.</p>
         </section>
         
-        <section class="content-section" id="contentSection">
-            <div class="content-header">
+        <section class="book-info" id="bookInfo">
+            <div class="book-header">
                 <h2 class="book-title" id="bookTitle">Nome do Livro</h2>
-                <div class="controls">
-                    <button class="btn" id="prevBtn">Anterior</button>
-                    <button class="btn" id="nextBtn">Próximo</button>
+                <div class="book-meta">
+                    <span id="bookSize">0 KB</span> | 
+                    <span id="bookType">Tipo do Arquivo</span>
                 </div>
             </div>
-            <div class="book-content" id="bookContent">
-                <!-- Conteúdo do livro será renderizado aqui -->
+            <div class="reader-container">
+                <div class="reader-content" id="readerContent">
+                    <!-- Conteúdo do livro aparecerá aqui -->
+                    <p>Seu livro será exibido aqui após o upload.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="file-list">
+            <h2>ARQUIVOS ENVIADOS</h2>
+            <div id="fileList">
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">meu_livro.pdf</div>
+                        <div class="file-size">2.4 MB</div>
+                    </div>
+                    <div class="file-actions">
+                        <button onclick="readFile('meu_livro.pdf')">Ler</button>
+                    </div>
+                </div>
+                <div class="file-item">
+                    <div>
+                        <div class="file-name">outro_livro.txt</div>
+                        <div class="file-size">1.1 MB</div>
+                    </div>
+                    <div class="file-actions">
+                        <button onclick="readFile('outro_livro.txt')">Ler</button>
+                    </div>
+                </div>
             </div>
         </section>
         
         <section class="instructions">
-            <h2>Como Usar</h2>
+            <h2>COMO UTILIZAR</h2>
             <ul>
-                <li>Selecione seu arquivo de texto (.txt) contendo o livro</li>
-                <li>O conteúdo será exibido com a <span class="highlight">paleta de cores preto e vermelho</span></li>
-                <li>Use os botões para navegar entre as páginas</li>
-                <li>Para livros grandes, o conteúdo é dividido em páginas automaticamente</li>
-                <li>O texto éjustificado e com recuo de parágrafos</li>
+                <li><strong>Escolha seu arquivo:</strong> Clique em "ESCOLHER ARQUIVO" ou arraste e solte no quadro acima</li>
+                <li><strong>Visualize:</strong> O conteúdo do seu livro será exibido na área abaixo</li>
+                <li><strong>Leitura:</strong> Navegue pelo conteúdo usando as barras de rolagem</li>
+                <li><strong>Arquivos:</strong> Todos os arquivos enviados aparecem na lista para leitura futura</li>
             </ul>
         </section>
         
         <footer>
-            <p>Leitor de Livros - Estilo Preto e Vermelho | Todos os direitos reservados</p>
+            <p>Leitor de Livros - Preto & Vermelho | Todos os direitos reservados</p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const dropZone = document.getElementById('dropZone');
             const fileInput = document.getElementById('fileInput');
-            const fileName = document.getElementById('fileName');
-            const contentSection = document.getElementById('contentSection');
+            const browseBtn = document.getElementById('browseBtn');
+            const bookInfo = document.getElementById('bookInfo');
+            const readerContent = document.getElementById('readerContent');
             const bookTitle = document.getElementById('bookTitle');
-            const bookContent = document.getElementById('bookContent');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
+            const bookSize = document.getElementById('bookSize');
+            const bookType = document.getElementById('bookType');
+            const fileList = document.getElementById('fileList');
             
-            let bookText = '';
-            let currentPage = 0;
-            let pages = [];
-            const wordsPerPage = 500; // Ajuste para controlar o tamanho das páginas
+            // Abrir o seletor de arquivo ao clicar no botão
+            browseBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
             
-            // Atualiza o nome do arquivo selecionado
+            // Tratamento do envio do arquivo
             fileInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    fileName.textContent = file.name;
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        bookText = e.target.result;
-                        bookTitle.textContent = file.name.replace('.txt', '');
-                        splitIntoPages();
-                        displayPage();
-                        contentSection.style.display = 'block';
-                    };
-                    
-                    reader.readAsText(file);
-                } else {
-                    fileName.textContent = 'Nenhum arquivo selecionado';
+                if (this.files && this.files[0]) {
+                    handleFile(this.files[0]);
                 }
             });
             
-            // Divide o conteúdo em páginas
-            function splitIntoPages() {
-                pages = [];
-                const words = bookText.trim().split(/\s+/);
-                
-                for (let i = 0; i < words.length; i += wordsPerPage) {
-                    const pageWords = words.slice(i, i + wordsPerPage);
-                    pages.push(pageWords.join(' '));
+            // Drag and drop
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropZone.style.borderColor = '#ff3333';
+                dropZone.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
+            }
+            
+            function unhighlight() {
+                dropZone.style.borderColor = '#ff0000';
+                dropZone.style.backgroundColor = 'rgba(255, 0, 0, 0.05)';
+            }
+            
+            dropZone.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length) {
+                    handleFile(files[0]);
                 }
             }
             
-            // Exibe uma página específica
-            function displayPage() {
-                if (pages.length === 0) return;
+            function handleFile(file) {
+                // Simular leitura do arquivo (já que não podemos realmente ler arquivos locais no browser)
+                const fileName = file.name;
+                const fileSize = formatFileSize(file.size);
+                const fileType = file.type || fileName.split('.').pop().toUpperCase();
                 
-                // Formata o conteúdo com parágrafos
-                let formattedContent = pages[currentPage];
-                // Quebra o texto em parágrafos baseado em quebras de linha dobradas
-                const paragraphs = formattedContent.split('\n\n');
-                formattedContent = paragraphs.map(p => `<p>${p}</p>`).join('');
+                // Atualizar informações do livro
+                bookTitle.textContent = fileName;
+                bookSize.textContent = fileSize;
+                bookType.textContent = fileType;
                 
-                bookContent.innerHTML = formattedContent;
+                // Simular conteúdo do livro
+                readerContent.innerHTML = `
+                    <p><strong>Conteúdo do livro: ${fileName}</strong></p>
+                    <p>Este é um exemplo de conteúdo que seria lido do seu livro.</p>
+                    <p>Seu conteúdo será exibido aqui após o upload do documento.</p>
+                    <p style="color: #ff3333; font-weight: bold;">Clique em "Leitura" para visualizar o conteúdo completo.</p>
+                    <p>Aqui está uma amostra de como o conteúdo apareceria:</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nunc nisl eget nisl. Sed auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nunc nisl eget nisl. Sed auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nunc nisl eget nisl.</p>
+                    <p>Ut nec nulla at risus consectetur tempor. Sed auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nunc nisl eget nisl. Sed auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nunc nisl eget nisl.</p>
+                    <p><strong>Este conteúdo é apenas uma demonstração.</strong> No ambiente real, o conteúdo real do seu livro seria carregado aqui.</p>
+                `;
                 
-                // Atualiza botões
-                prevBtn.disabled = currentPage === 0;
-                nextBtn.disabled = currentPage === pages.length - 1;
+                // Exibir informações do livro
+                bookInfo.style.display = 'block';
+                
+                // Adicionar à lista de arquivos
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div>
+                        <div class="file-name">${fileName}</div>
+                        <div class="file-size">${fileSize}</div>
+                    </div>
+                    <div class="file-actions">
+                        <button onclick="readFile('${fileName}')">Ler</button>
+                    </div>
+                `;
+                fileList.appendChild(fileItem);
             }
             
-            // Navegação entre páginas
-            prevBtn.addEventListener('click', function() {
-                if (currentPage > 0) {
-                    currentPage--;
-                    displayPage();
-                }
-            });
+            // Função para ler arquivo (simulação)
+            window.readFile = function(fileName) {
+                bookTitle.textContent = fileName;
+                readerContent.innerHTML = `
+                    <p><strong>Conteúdo do livro: ${fileName}</strong></p>
+                    <p>Este é um exemplo de conteúdo que seria lido do seu livro.</p>
+                    <p>Seu conteúdo será exibido aqui após o upload do documento.</p>
+                    <p style="color: #ff3333; font-weight: bold;">Clique em "Leitura" para visualizar o conteúdo completo.</p>
+                    <p>Esta é uma demonstração do conteúdo do livro. No ambiente real, o conteúdo real seria carregado aqui.</p>
+                `;
+                bookInfo.style.display = 'block';
+            };
             
-            nextBtn.addEventListener('click', function() {
-                if (currentPage < pages.length - 1) {
-                    currentPage++;
-                    displayPage();
-                }
-            });
-            
-            // Atalho do teclado para navegação
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowLeft') {
-                    prevBtn.click();
-                } else if (e.key === 'ArrowRight') {
-                    nextBtn.click();
-                }
-            });
+            // Função para formatar tamanho do arquivo
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
         });
     </script>
 </body>
